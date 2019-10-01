@@ -6,7 +6,7 @@
 ;; URL: https://github.com/brantou/lsp-crystal.el
 ;; Keywords: languages crystal
 ;; Version:  0.1.0
-;; Package-Requires: ((crystal-mode "0.1.0") (lsp-mode "4.0"))
+;; Package-Requires: ((crystal-mode "0.2.0") (lsp-mode "6.1"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -43,9 +43,16 @@
 (require 'lsp-mode)
 (require 'crystal-mode)
 
+
+(defcustom lsp-server-crystal-scry "scry"
+  "Path to the scry binary"
+  :type 'string
+  :group 'lsp-crystal)
+
+
 (lsp-register-client
  (make-lsp-client :new-connection
-                  (lsp-stdio-connection (lambda () (cons "crystal" #'crystal-find-project-root "scry")))
+                  (lsp-stdio-connection lsp-server-crystal-scry)
                   :major-modes '(crystal-mode)
                   :priority 0
                   :server-id 'scry))
