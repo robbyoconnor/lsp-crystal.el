@@ -42,10 +42,16 @@
 
 (require 'lsp-mode)
 (require 'crystal-mode)
+(lsp-register-client
+ (make-lsp-client :new-connection
+                  (lsp-stdio-connection
+                   'lsp-crystal "crystal"
+                   #'crystal-find-project-root
+                   '("scry"))
+                  :major-modes '(crystal-mode)
+                  :priority -1
+                  :server-id 'crystal-scry))
 
-(lsp-define-stdio-client lsp-crystal "crystal"
-                         #'crystal-find-project-root
-                         '("scry"))
 
 (provide 'lsp-crystal)
 ;;; lsp-crystal.el ends here
